@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mindload</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="title">MINDLOAD</h1>
+
+      <div id="pantalla-inicio" class="pantalla">
+        <p class="label">Ingresa la URL a descargar</p>
+        <div class="input-group">
+          <input
+            type="text"
+            id="url-input"
+            placeholder="https://www.mindload.com/......."
+            autocomplete="off"
+          />
+          <button id="btn-buscar">Buscar</button>
+        </div>
+      </div>
+
+      <div id="pantalla-detalles" class="pantalla" style="display: none">
+        <div class="info-card">
+          <h2 id="titulo">Cargando...</h2>
+          <p id="duracion"></p>
+
+          <div id="mp3-section" style="display: none">
+            <p class="format-section-title">Audio</p>
+            <div id="mp3-container" class="formatos-grid"></div>
+          </div>
+
+          <div id="mp4-section" style="display: none">
+            <p class="format-section-title">Video</p>
+            <div id="mp4-container" class="formatos-grid"></div>
+          </div>
+
+          <div id="sin-formatos" style="display: none" class="sin-formatos">
+            no se encontraron formatos MP3 & MP4 disponibles
+          </div>
+
+          <button
+            id="btn-descargar"
+            class="btn-principal"
+            style="display: none"
+          >
+            DESCARGAR
+          </button>
+          <button id="btn-volver" class="btn-volver">← Volver</button>
+        </div>
+      </div>
+
+      <div id="spinner" class="spinner" style="display: none">
+        <div class="spinner-ring"></div>
+        <p>Descargando...</p>
+      </div>
+
+      <div id="estado" class="estado"></div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

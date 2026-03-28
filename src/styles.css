@@ -1,0 +1,259 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #ffffff;
+  color: #000000;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 550px;
+  text-align: center;
+  background: white;
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+.label {
+  color: #000000;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  width: 10rem;
+  height: 10px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  margin-right: 5px;
+  color: #000000;
+  box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.4);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+}
+
+input:focus {
+  border-color: #3ca5e7;
+  width: 15rem;
+  box-shadow: -2px 2px 8px #3ca5e739;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+button {
+  text-align: center;
+  padding: 5px 10px;
+  border: solid black 1px;
+  border-radius: 4px;
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: #d2d2d2;
+}
+
+.info-card {
+  text-align: left;
+}
+
+.info-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+  word-break: break-word;
+}
+
+.info-card > p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.format-section-title {
+  font-weight: 600;
+  color: #333;
+  margin: 15px 0 10px 0;
+  font-size: 0.9rem;
+}
+
+.formatos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.format-btn {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #333;
+}
+
+.format-btn:hover {
+  background: #3ca5e7;
+  border-color: #3ca5e7;
+  color: white;
+}
+
+.format-btn.seleccionado {
+  background: #3ca5e7;
+  border-color: #3ca5e7;
+  color: white;
+}
+
+.btn-principal {
+  width: 100%;
+  background: #2ecc71;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.btn-principal:hover {
+  background: #27ae60;
+}
+
+.btn-volver {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #666;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: 12px;
+}
+
+.btn-volver:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.sin-formatos {
+  background: #fff3e0;
+  border: 1px solid #ffd966;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  color: #b45f06;
+  margin: 15px 0;
+}
+
+/* Spinner */
+.spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.spinner-ring {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3ca5e7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+.spinner p {
+  color: white;
+  font-size: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estado */
+.estado {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  display: none;
+}
+
+.estado.exito {
+  display: block;
+  background: #e8f8f0;
+  color: #27ae60;
+}
+
+.estado.error {
+  display: block;
+  color: #e74c3c;
+}
+
+.estado.cargando {
+  display: block;
+  color: #3ca5e7;
+}
+
+*::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body {
+    overflow-y: auto;
+}
