@@ -99,7 +99,7 @@ button:hover {
   word-break: break-word;
 }
 
-.info-card > p {
+.info-card>p {
   color: #666;
   margin-bottom: 20px;
 }
@@ -178,45 +178,6 @@ button:hover {
   margin: 15px 0;
 }
 
-/* Spinner */
-.spinner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.spinner-ring {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3ca5e7;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 15px;
-}
-
-.spinner p {
-  color: white;
-  font-size: 1rem;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 /* Estado */
 .estado {
   margin-top: 20px;
@@ -244,16 +205,180 @@ button:hover {
 }
 
 *::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    background: transparent;
+  width: 0;
+  height: 0;
+  background: transparent;
 }
 
 * {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body {
-    overflow-y: auto;
+  overflow-y: auto;
+}
+
+/* ============================================ */
+/* PANTALLA DE PROGRESO (tercera sección)       */
+/* ============================================ */
+
+.pantalla-progreso {
+  display: none;
+  text-align: left;
+}
+
+.progreso-header {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.progreso-header h2 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+  word-break: break-word;
+}
+
+.progreso-header p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.video-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.video-info {
+  flex: 1;
+}
+
+.video-thumbnail {
+  flex-shrink: 0;
+}
+
+.video-thumbnail img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar-container {
+  margin: 30px 0 20px 0;
+}
+
+.progress-bg {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background-color: #3ca5e7;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+.download-status {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.download-status.error-status {
+  border-left-color: #e74c3c;
+  background: #fee;
+  color: #e74c3c;
+}
+
+.download-status.complete-status {
+  border-left-color: #27ae60;
+  background: #e8f8f0;
+  color: #27ae60;
+}
+
+.download-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Botón cancelar */
+.btn-cancelar {
+  width: 100%;
+  background: #000000;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 20px;
+  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.40);
+}
+
+.btn-cancelar:hover {
+  background-color: #ba0a0a;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.400);
+}
+
+/* Spinner */
+.spinner {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.spinner-ring {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3ca5e7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+.spinner p {
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

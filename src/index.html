@@ -1,67 +1,97 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mindload</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <h1 class="title">MINDLOAD</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindload</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-      <div id="pantalla-inicio" class="pantalla">
-        <p class="label">Ingresa la URL a descargar</p>
-        <div class="input-group">
-          <input
-            type="text"
-            id="url-input"
-            placeholder="https://www.mindload.com/......."
-            autocomplete="off"
-          />
-          <button id="btn-buscar">Buscar</button>
-        </div>
+<body>
+  <div class="container">
+    <h1 class="title">MINDLOAD</h1>
+
+    <div id="pantalla-inicio" class="pantalla">
+      <p class="label">Ingresa la URL a descargar</p>
+      <div class="input-group">
+        <input type="text" id="url-input" placeholder="https://www.mindload.com/......." autocomplete="off" />
+        <button id="btn-buscar">Buscar</button>
       </div>
-
-      <div id="pantalla-detalles" class="pantalla" style="display: none">
-        <div class="info-card">
-          <h2 id="titulo">Cargando...</h2>
-          <p id="duracion"></p>
-
-          <div id="mp3-section" style="display: none">
-            <p class="format-section-title">Audio</p>
-            <div id="mp3-container" class="formatos-grid"></div>
-          </div>
-
-          <div id="mp4-section" style="display: none">
-            <p class="format-section-title">Video</p>
-            <div id="mp4-container" class="formatos-grid"></div>
-          </div>
-
-          <div id="sin-formatos" style="display: none" class="sin-formatos">
-            no se encontraron formatos MP3 & MP4 disponibles
-          </div>
-
-          <button
-            id="btn-descargar"
-            class="btn-principal"
-            style="display: none"
-          >
-            DESCARGAR
-          </button>
-          <button id="btn-volver" class="btn-volver">← Volver</button>
-        </div>
-      </div>
-
-      <div id="spinner" class="spinner" style="display: none">
-        <div class="spinner-ring"></div>
-        <p>Descargando...</p>
-      </div>
-
-      <div id="estado" class="estado"></div>
     </div>
 
-    <script src="main.js"></script>
-  </body>
+    <div id="pantalla-detalles" class="pantalla" style="display: none">
+      <div class="info-card">
+        <div class="video-header">
+          <div class="video-info">
+            <h2 id="titulo">Cargando...</h2>
+            <p id="duracion"></p>
+          </div>
+          <div class="video-thumbnail">
+            <img id="thumbnail-img" src="" alt="Miniatura del video"
+              style="width: 120px; height: auto; border-radius: 8px; display: none;">
+          </div>
+        </div>
+
+        <div id="mp3-section" style="display: none">
+          <p class="format-section-title">Audio</p>
+          <div id="mp3-container" class="formatos-grid"></div>
+        </div>
+
+        <div id="mp4-section" style="display: none">
+          <p class="format-section-title">Video</p>
+          <div id="mp4-container" class="formatos-grid"></div>
+        </div>
+
+        <div id="sin-formatos" style="display: none" class="sin-formatos">
+          no se encontraron formatos MP3 & MP4 disponibles
+        </div>
+
+        <button id="btn-descargar" class="btn-principal" style="display: none">
+          DESCARGAR
+        </button>
+        <button id="btn-volver" class="btn-volver">← Volver</button>
+      </div>
+    </div>
+
+    <div id="estado" class="estado"></div>
+
+    <div id="pantalla-progreso" class="pantalla-progreso">
+      <div class="video-header">
+        <div class="video-info">
+          <h2 id="progreso-titulo">Cargando...</h2>
+          <p id="progreso-duracion"></p>
+        </div>
+        <div class="video-thumbnail">
+          <img id="progreso-thumbnail" src="" alt="Miniatura"
+            style="width: 120px; height: auto; border-radius: 8px; display: none;">
+        </div>
+      </div>
+
+      <div id="download-status" class="download-status"></div>
+      <div id="spinner" class="spinner">
+        <div class="spinner-ring"></div>
+        <p>Descarga en curso...</p>
+      </div>
+
+      <div class="progress-bar-container">
+        <div class="progress-bg">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <div id="progress-text" class="progress-text">0%</div>
+      </div>
+
+      <div class="download-stats">
+        <span id="download-speed">Velocidad: --</span>
+        <span id="download-size">Tamaño: --</span>
+      </div>
+
+      <button id="btn-cancelar" class="btn-cancelar">CANCELAR</button>
+      <button id="btn-volver-progreso" class="btn-volver" style="margin-top: 12px">← Volver</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
 </html>

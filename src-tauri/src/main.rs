@@ -10,6 +10,7 @@ const CREATE_NO_WINDOW: u32 = 0x08000000;
 struct VideoInfo {
     title: String,
     duration: String,
+    thumbnail: String, 
     formats: Vec<Format>,
 }
 
@@ -53,7 +54,8 @@ async fn get_video_info(url: String) -> Result<VideoInfo, String> {
     
     let title = json["title"].as_str().unwrap_or("Desconocido").to_string();
     let duration = format_duration(json["duration"].as_u64().unwrap_or(0));
-    
+    let thumbnail = json["thumbnail"].as_str().unwrap_or("").to_string();
+
     println!("Título extraído: {}", title);
     println!("Duración extraída: {}", duration);
     
@@ -68,6 +70,20 @@ async fn get_video_info(url: String) -> Result<VideoInfo, String> {
         format_type: "audio".to_string(),
     });
     
+    formats.push(Format {
+    id: "video_2160p".to_string(),
+    quality: "MP4 2160p (4K) - Calidad máxima".to_string(),
+    size: None,
+    format_type: "video".to_string(),
+    });
+
+    formats.push(Format {
+    id: "video_1440p".to_string(),
+    quality: "MP4 1440p (2K) - Muy alta calidad".to_string(),
+    size: None,
+    format_type: "video".to_string(),
+    });
+
     formats.push(Format {
         id: "video_1080p".to_string(),
         quality: "MP4 1080p (Full HD) - Alta calidad".to_string(),
@@ -106,15 +122,26 @@ async fn get_video_info(url: String) -> Result<VideoInfo, String> {
     }
     
     Ok(VideoInfo {
-        title,
-        duration,
-        formats,
-    })
+    title,
+    duration,
+    thumbnail,
+    formats,
+})
 }
 
 #[tauri::command]
-async fn descargar_video(url: String, format_id: String, destino: String) -> Result<String, String> {
+async fn descargar_video(url: String, format_id: String) -> Result<String, String> {
     let clean_url = limpiar_url_playlist(&url);
+    
+    // Obtener la carpeta Mindload
+    let descargas = dirs::download_dir().ok_or("No se pudo obtener la carpeta de descargas")?;
+    let carpeta_mindload = descargas.join("Mindload");
+    
+    // Asegurar que la carpeta existe (por si acaso)
+    if !carpeta_mindload.exists() {
+        std::fs::create_dir_all(&carpeta_mindload)
+            .map_err(|e| format!("Error al crear la carpeta Mindload: {}", e))?;
+    }
     
     let mut cmd = Command::new("yt-dlp"); 
     cmd.creation_flags(CREATE_NO_WINDOW);
@@ -125,7 +152,29 @@ async fn descargar_video(url: String, format_id: String, destino: String) -> Res
                 "-f", "bestaudio",
                 "--extract-audio",
                 "--audio-format", "mp3",
-                "-o", &format!("{}/%(title)s.%(ext)s", destino),
+                "--sleep-interval", "5",              
+                "--retries", "5", 
+                "-o", &format!("{}/%(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
+                &clean_url
+            ]);
+        },
+        "video_2160p" => {
+            cmd.args([
+                "-f", "bestvideo[height<=2160][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]",
+                "--merge-output-format", "mp4",
+                "--sleep-interval", "5",            
+                "--retries", "5", 
+                "-o", &format!("{}/%(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
+                &clean_url
+            ]);
+        },
+        "video_1440p" => {
+            cmd.args([
+                "-f", "bestvideo[height<=1440][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]",
+                "--merge-output-format", "mp4",
+                "--sleep-interval", "5",           
+                "--retries", "5", 
+                "-o", &format!("{}/%(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
                 &clean_url
             ]);
         },
@@ -133,7 +182,9 @@ async fn descargar_video(url: String, format_id: String, destino: String) -> Res
             cmd.args([
                 "-f", "bestvideo[height<=1080][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]",
                 "--merge-output-format", "mp4",
-                "-o", &format!("{}/%(title)s.%(ext)s", destino),
+                "--sleep-interval", "5",            
+                "--retries", "5", 
+                "-o", &format!("{}/%(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
                 &clean_url
             ]);
         },
@@ -141,7 +192,9 @@ async fn descargar_video(url: String, format_id: String, destino: String) -> Res
             cmd.args([
                 "-f", "bestvideo[height<=720][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]",
                 "--merge-output-format", "mp4",
-                "-o", &format!("{}/%(title)s.%(ext)s", destino),
+                "--sleep-interval", "5",                       
+                "--retries", "5", 
+                "-o", &format!("{}/%(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
                 &clean_url
             ]);
         },
@@ -149,7 +202,9 @@ async fn descargar_video(url: String, format_id: String, destino: String) -> Res
             cmd.args([
                 "-f", "bestvideo[height<=480][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]",
                 "--merge-output-format", "mp4",
-                "-o", &format!("{}/%(title)s.%(ext)s", destino),
+                "--sleep-interval", "5",            
+                "--retries", "5", 
+                "-o", &format!("{}/%(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
                 &clean_url
             ]);
         },
@@ -157,7 +212,9 @@ async fn descargar_video(url: String, format_id: String, destino: String) -> Res
             cmd.args([
                 "-f", "bestvideo[height<=360][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]",
                 "--merge-output-format", "mp4",
-                "-o", &format!("{}/%(title)s.%(ext)s", destino),
+                "--sleep-interval", "5",              
+                "--retries", "5", 
+                "-o", &format!("{}/%(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
                 &clean_url
             ]);
         },
@@ -166,7 +223,9 @@ async fn descargar_video(url: String, format_id: String, destino: String) -> Res
                 "--yes-playlist",
                 "-f", "bestvideo[height<=1080][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]",
                 "--merge-output-format", "mp4",
-                "-o", &format!("{}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s", destino),
+                "--sleep-interval", "5",         
+                "--retries", "5", 
+                "-o", &format!("{}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s", carpeta_mindload.to_string_lossy()),
                 &url
             ]);
         },
@@ -186,7 +245,9 @@ async fn descargar_video(url: String, format_id: String, destino: String) -> Res
     Ok("Descarga completada".to_string())
 }
 
+
 fn format_duration(seconds: u64) -> String {
+
     let hours = seconds / 3600;
     let minutes = (seconds % 3600) / 60;
     let secs = seconds % 60;
@@ -198,7 +259,30 @@ fn format_duration(seconds: u64) -> String {
     }
 }
 
+fn crear_carpeta_mindload() -> Result<String, String> {
+    // Obtener la carpeta de descargas del sistema
+    let descargas = dirs::download_dir().ok_or("No se pudo obtener la carpeta de descargas")?;
+    let carpeta_mindload = descargas.join("Mindload");
+    
+    // Crear la carpeta si no existe
+    if !carpeta_mindload.exists() {
+        std::fs::create_dir_all(&carpeta_mindload)
+            .map_err(|e| format!("Error al crear la carpeta Mindload: {}", e))?;
+        println!("📁 Carpeta Mindload creada en: {:?}", carpeta_mindload);
+    } else {
+        println!("📁 Carpeta Mindload ya existe en: {:?}", carpeta_mindload);
+    }
+    
+    Ok(carpeta_mindload.to_string_lossy().to_string())
+}
+
 fn main() {
+    // Crear la carpeta Mindload al iniciar
+    match crear_carpeta_mindload() {
+        Ok(ruta) => println!("✅ Carpeta lista en: {}", ruta),
+        Err(e) => eprintln!("❌ Error: {}", e),
+    }
+    
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![get_video_info, descargar_video])
         .run(tauri::generate_context!())

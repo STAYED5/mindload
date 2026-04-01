@@ -1,6 +1,6 @@
 const { invoke } = window.__TAURI__.core;
 const { path } = window.__TAURI__;
-
+const { listen } = window.__TAURI__.event;
 const btnBuscar = document.getElementById("btn-buscar");
 const btnDescargar = document.getElementById("btn-descargar");
 const btnVolver = document.getElementById("btn-volver");
@@ -17,10 +17,21 @@ const sinFormatosDiv = document.getElementById("sin-formatos");
 const btnDescargarElement = document.getElementById("btn-descargar");
 const estadoDiv = document.getElementById("estado");
 const spinner = document.getElementById("spinner");
+const pantallaProgreso = document.getElementById("pantalla-progreso");
+const progresoTitulo = document.getElementById("progreso-titulo");
+const progresoDuracion = document.getElementById("progreso-duracion");
+const progressFill = document.getElementById("progress-fill");
+const progressText = document.getElementById("progress-text");
+const downloadStatus = document.getElementById("download-status");
+const downloadSpeed = document.getElementById("download-speed");
+const downloadSize = document.getElementById("download-size");
+const btnCancelar = document.getElementById("btn-cancelar");
+const btnVolverProgreso = document.getElementById("btn-volver-progreso");
+const thumbnailImg = document.getElementById("thumbnail-img");
 
+let currentCancelToken = null;
 let videoInfo = null;
 let formatoSeleccionado = null;
-let carpetaDestino = null;
 
 function mostrarEstado(mensaje, tipo) {
   if (!estadoDiv) return;
@@ -59,9 +70,16 @@ function resetearApp() {
   if (urlInput) urlInput.value = "";
   formatoSeleccionado = null;
   if (pantallaDetalles) pantallaDetalles.style.display = "none";
+  if (pantallaProgreso) pantallaProgreso.style.display = "none";
   if (pantallaInicio) pantallaInicio.style.display = "block";
   if (tituloElement) tituloElement.textContent = "Cargando...";
   if (duracionElement) duracionElement.textContent = "";
+  if (progressFill) progressFill.style.width = "0%";
+  if (progressText) progressText.textContent = "0%";
+  if (downloadStatus) downloadStatus.textContent = "Preparando descarga...";
+  if (downloadStatus) downloadStatus.className = "download-status";
+  if (downloadSpeed) downloadSpeed.textContent = "Velocidad: --";
+  if (downloadSize) downloadSize.textContent = "Tamaño: --";
 }
 
 function crearBotonFormato(fmt) {
@@ -70,21 +88,13 @@ function crearBotonFormato(fmt) {
   btn.textContent = `${fmt.quality} (${fmt.size || "?"} MB)`;
   btn.dataset.formatId = fmt.id;
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".format-btn").forEach((b) => b.classList.remove("seleccionado"));
+    document
+      .querySelectorAll(".format-btn")
+      .forEach((b) => b.classList.remove("seleccionado"));
     btn.classList.add("seleccionado");
     formatoSeleccionado = fmt.id;
   });
   return btn;
-}
-
-async function obtenerCarpetaMindload() {
-  try {
-    carpetaDestino = await path.downloadDir();
-    console.log("Carpeta:", carpetaDestino);
-  } catch (error) {
-    carpetaDestino = "C:\\Users\\LUZY\\Downloads";
-    console.log("Carpeta por defecto:", carpetaDestino);
-  }
 }
 
 btnBuscar.addEventListener("click", async () => {
@@ -110,6 +120,13 @@ btnBuscar.addEventListener("click", async () => {
     if (duracionElement) {
       duracionElement.innerText = `Duración: ${info.duration || "0:00"}`;
       console.log("Duración asignada:", duracionElement.innerText);
+    }
+    
+    if (info.thumbnail && thumbnailImg) {
+      thumbnailImg.src = info.thumbnail;
+      thumbnailImg.style.display = "block";
+    } else if (thumbnailImg) {
+      thumbnailImg.style.display = "none";
     }
 
     limpiarFormatos();
@@ -139,7 +156,6 @@ btnBuscar.addEventListener("click", async () => {
     if (pantallaInicio) pantallaInicio.style.display = "none";
     if (pantallaDetalles) pantallaDetalles.style.display = "block";
     ocultarEstado();
-
   } catch (error) {
     console.error("Error:", error);
     mostrarEstado("Error: " + error, "error");
@@ -154,30 +170,73 @@ btnDescargar.addEventListener("click", async () => {
     return;
   }
 
-  mostrarSpinner();
+  pantallaDetalles.style.display = "none";
+  pantallaProgreso.style.display = "block";
+
+  if (progresoTitulo) progresoTitulo.innerText = tituloElement.innerText;
+    if (progresoDuracion) progresoDuracion.innerText = duracionElement.innerText;
+    
+    // Copiar la miniatura
+    const progresoThumbnail = document.getElementById("progreso-thumbnail");
+    if (progresoThumbnail && thumbnailImg) {
+        progresoThumbnail.src = thumbnailImg.src;
+        progresoThumbnail.style.display = thumbnailImg.style.display;
+    }
+
+  if (progresoTitulo) progresoTitulo.innerText = tituloElement.innerText;
+  if (progresoDuracion) progresoDuracion.innerText = duracionElement.innerText;
+  if (progressFill) progressFill.style.width = "0%";
+  if (progressText) progressText.textContent = "0%";
+  if (downloadStatus) {
+    downloadStatus.textContent = "Iniciando descarga...";
+    downloadStatus.className = "download-status";
+  }
+  if (downloadSpeed) downloadSpeed.textContent = "Velocidad: --";
+  if (downloadSize) downloadSize.textContent = "Tamaño: --";
+
   btnDescargar.disabled = true;
 
   try {
     await invoke("descargar_video", {
       url: urlInput.value,
       formatId: formatoSeleccionado,
-      destino: carpetaDestino,
     });
 
-    ocultarSpinner();
-    mostrarEstado(`Descarga completada en: ${carpetaDestino}`, "exito");
+    if (downloadStatus) {
+      downloadStatus.textContent = "¡Descarga completada!";
+      downloadStatus.className = "download-status complete-status";
+    }
+    if (progressFill) progressFill.style.width = "100%";
+    if (progressText) progressText.textContent = "100%";
 
     setTimeout(() => {
       resetearApp();
       btnDescargar.disabled = false;
-    }, 3000);
+    }, 2000);
   } catch (error) {
-    ocultarSpinner();
-    mostrarEstado("Error: " + error, "error");
+
+    if (downloadStatus) {
+      downloadStatus.textContent = "Error: " + error;
+      downloadStatus.className = "download-status error-status";
+    }
     btnDescargar.disabled = false;
   }
 });
 
+btnVolverProgreso.addEventListener("click", () => {
+  resetearApp();
+});
+
+btnCancelar.addEventListener("click", () => {
+  if (downloadStatus) {
+    downloadStatus.textContent = "⏹️ Descarga cancelada";
+    downloadStatus.className = "download-status error-status";
+  }
+  setTimeout(() => {
+    resetearApp();
+    btnDescargar.disabled = false;
+  }, 1000);
+});
+
 btnVolver.addEventListener("click", resetearApp);
 
-obtenerCarpetaMindload();
