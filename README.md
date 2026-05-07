@@ -24,7 +24,6 @@
 | 🏷️ **Metadatos completos** | Incrusta título, artista, carátula y número de pista |
 | 📋 **Playlists** | Descarga listas de reproducción completas |
 | 🎯 **Interfaz simple** | Diseño minimalista y fácil de usar |
-| 🚀 **Multiplataforma** | Compatible con Windows, Linux y macOS |
 
 ---
 
@@ -47,9 +46,8 @@
 
 1. Ve a la sección [Releases](https://github.com/STAYED5/mindload/releases)
 2. Descarga el archivo correspondiente a tu sistema operativo:
-   - `mindload_2.0.0_x64_en-US.msi` (Windows)
-   - `mindload_2.0.0_amd64.deb` (Linux)
-   - `mindload.app` (macOS)
+   - `mindload_0.2.0_x64_en-US.msi` (Windows)
+   - `mindload_0.2.0_x64-setup.exe` (Windows)
 3. Ejecuta el instalador
 
 ### Desde código fuente
@@ -95,8 +93,8 @@ Descargador de contenido de YouTube (videos, playlists y música) con interfaz g
 | 2K (1440p)    | Muy alta     | 60   |
 | 1080p         | Full HD      | 60/30|
 | 720p          | HD           | 60/30|
-| 480p          | Media        | -    |
-| 360p          | Baja         | -    |
+| 480p          | Media        | 30   |
+| 360p          | Baja         | 30   |
 
 ## 📁 Estructura de archivos
 ```
@@ -159,17 +157,8 @@ mindload/
 - Cola de descargas
 - Historial de descargas
 - Modo oscuro/claro
+- Multiplataforma (Soporte para linux, mac y android)
 - Configuración de carpeta de destino
-
-## 🤝 Contribuciones
-
-Las contribuciones son bienvenidas. Por favor:
-
-1. Haz un Fork del proyecto
-2. Crea tu rama de características (`git checkout -b feature/nueva-caracteristica`)
-3. Commit tus cambios (`git commit -m 'Agrego nueva caracteristica'`)
-4. Push a la rama (`git push origin feature/nueva-caracteristica`)
-5. Abre un Pull Request
 
 ## 📄 Licencia
 
@@ -177,7 +166,7 @@ Este proyecto está bajo la licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👤 Autor
 
-**LUZY (STAYK5)**  
+**LUZY**  
 GitHub: [@STAYED5](https://github.com/STAYED5)
 
 ## 🙏 Agradecimientos
