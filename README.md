@@ -53,7 +53,8 @@
 3. Ejecuta el instalador
 
 ### Desde código fuente
-bash
+
+```bash
 # Clonar el repositorio
 git clone https://github.com/STAYED5/mindload.git
 cd mindload
@@ -71,116 +72,121 @@ npm run tauri dev
 
 # Construir para producción
 npm run tauri build
+```
+# 🧠 Mindload
 
-🎯 Cómo usar
-Pega una URL de YouTube (video, playlist o música)
+Descargador de contenido de YouTube (videos, playlists y música) con interfaz gráfica moderna construida con Tauri.
 
-Selecciona el formato deseado:
+## 🎯 Cómo usar
 
-MP3 Audio (con metadatos)
+1. Pega una URL de YouTube (video, playlist o música)
+2. Selecciona el formato deseado:
+   - MP3 Audio (con metadatos)
+   - Video en diferentes resoluciones
+3. Haz clic en "Descargar"
+4. Los archivos se guardan en `Descargas/Mindload/`
 
-Video en diferentes resoluciones
+## 📦 Formatos soportados
 
-Haz clic en "Descargar"
+| Formato       | Calidad      | FPS  |
+|---------------|--------------|------|
+| MP3 Audio     | 320kbps      | -    |
+| 4K (2160p)    | Ultra HD     | 60   |
+| 2K (1440p)    | Muy alta     | 60   |
+| 1080p         | Full HD      | 60/30|
+| 720p          | HD           | 60/30|
+| 480p          | Media        | -    |
+| 360p          | Baja         | -    |
 
-Los archivos se guardan en Descargas/Mindload/
+## 📁 Estructura de archivos
 
-Formatos soportados
-Formato	Calidad	FPS
-MP3 Audio	320kbps	-
-4K (2160p)	Ultra HD	60
-2K (1440p)	Muy alta	60
-1080p	Full HD	60/30
-720p	HD	60/30
-480p	Media	-
-360p	Baja	-
-Estructura de archivos
 Las descargas se organizan automáticamente:
-
-text
 Descargas/
 └── Mindload/
-    ├── Artista - Canción.mp3          (canciones sueltas)
-    └── Nombre Playlist/               (playlists)
-        ├── 01 - Artista - Canción 1.mp3
-        ├── 02 - Artista - Canción 2.mp3
-        └── ...
-🛠️ Tecnologías
-Tecnología	Uso
-Tauri	Framework de escritorio
-Rust	Backend y lógica de descargas
-yt-dlp	Extracción y descarga de contenido
-ffmpeg	Procesamiento de audio y video
-HTML/CSS/JS	Interfaz de usuario
-📁 Estructura del proyecto
-text
+├── Artista - Canción.mp3 (canciones sueltas)
+└── Nombre Playlist/ (playlists)
+├── 01 - Artista - Canción 1.mp3
+├── 02 - Artista - Canción 2.mp3
+└── ...
+
+## 🛠️ Tecnologías
+
+| Tecnología   | Uso                                      |
+|--------------|------------------------------------------|
+| Tauri        | Framework de escritorio                  |
+| Rust         | Backend y lógica de descargas            |
+| yt-dlp       | Extracción y descarga de contenido       |
+| ffmpeg       | Procesamiento de audio y video           |
+| HTML/CSS/JS  | Interfaz de usuario                      |
+
+## 📂 Estructura del proyecto
 mindload/
 ├── src-tauri/
-│   ├── src/
-│   │   └── main.rs          # Código Rust (backend)
-│   ├── Cargo.toml           # Dependencias Rust
-│   └── tauri.conf.json      # Configuración de Tauri
+│ ├── src/
+│ │ └── main.rs # Código Rust (backend)
+│ ├── Cargo.toml # Dependencias Rust
+│ └── tauri.conf.json # Configuración de Tauri
 ├── src/
-│   ├── index.html           # Interfaz principal
-│   ├── styles.css           # Estilos
-│   └── main.js              # Lógica del frontend
-├── package.json             # Dependencias Node.js
-└── README.md                # Este archivo
-⚠️ Limitaciones conocidas
-Spotify: El soporte para Spotify requiere una API key y cuenta Premium. Actualmente no implementado.
+│ ├── index.html # Interfaz principal
+│ ├── styles.css # Estilos
+│ └── main.js # Lógica del frontend
+├── package.json # Dependencias Node.js
+└── README.md # Este archivo
 
-YouTube: Descargas limitadas por políticas de YouTube (se recomienda usar con responsabilidad)
+## ⚠️ Limitaciones conocidas
 
-Windows: Puede requerir permisos de administrador ocasionalmente
+- **Spotify**: El soporte requiere API key y cuenta Premium. Actualmente no implementado.
+- **YouTube**: Descargas limitadas por políticas de YouTube (se recomienda usar con responsabilidad).
+- **Windows**: Puede requerir permisos de administrador ocasionalmente.
 
-🔧 Solución de problemas
-Problema	Solución
-"yt-dlp not found"	Instala yt-dlp y agrégalo al PATH
-"ffmpeg not found"	Instala ffmpeg y agrégalo al PATH
-Error 429 (Too Many Requests)	Espera unos minutos y vuelve a intentar
-Las descargas no comienzan	Verifica tu conexión a internet
-No se descargan playlists completas	Asegúrate de que la playlist sea pública
-📝 Próximas mejoras
-Barra de progreso en tiempo real
+## 🔧 Solución de problemas
 
-Descarga simultánea de múltiples archivos
+| Problema                         | Solución                                           |
+|----------------------------------|----------------------------------------------------|
+| "yt-dlp not found"               | Instala yt-dlp y agrégalo al PATH                 |
+| "ffmpeg not found"               | Instala ffmpeg y agrégalo al PATH                 |
+| Error 429 (Too Many Requests)    | Espera unos minutos y vuelve a intentar           |
+| Las descargas no comienzan       | Verifica tu conexión a internet                   |
+| No se descargan playlists completas | Asegúrate de que la playlist sea pública       |
 
-Soporte para más plataformas (SoundCloud, Bandcamp)
+## 🚀 Próximas mejoras
 
-Cola de descargas
+- Barra de progreso en tiempo real
+- Descarga simultánea de múltiples archivos
+- Soporte para más plataformas (SoundCloud, Bandcamp)
+- Cola de descargas
+- Historial de descargas
+- Modo oscuro/claro
+- Configuración de carpeta de destino
 
-Historial de descargas
+## 🤝 Contribuciones
 
-Modo oscuro/claro
-
-Configuración de carpeta de destino
-
-🤝 Contribuciones
 Las contribuciones son bienvenidas. Por favor:
 
-Haz un Fork del proyecto
+1. Haz un Fork del proyecto
+2. Crea tu rama de características (`git checkout -b feature/nueva-caracteristica`)
+3. Commit tus cambios (`git commit -m 'Agrego nueva caracteristica'`)
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)
+5. Abre un Pull Request
 
-Crea tu rama de características (git checkout -b feature/nueva-caracteristica)
+## 📄 Licencia
 
-Commit tus cambios (git commit -m 'Agrego nueva caracteristica')
+Este proyecto está bajo la licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
-Push a la rama (git push origin feature/nueva-caracteristica)
+## 👤 Autor
 
-Abre un Pull Request
+**LUZY (IAMLUZY)**  
+GitHub: [@STAYED5](https://github.com/STAYED5)
 
-📄 Licencia
-Este proyecto está bajo la licencia MIT. Ver el archivo LICENSE para más detalles.
+## 🙏 Agradecimientos
 
-👤 Autor
-LUZY (IAMLUZY)
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) - Por la increíble herramienta de descarga
+- [Tauri](https://tauri.app/) - Por el framework de escritorio
+- Discord - Por la comunidad que inspiró esta app
 
-GitHub: @STAYED5
+---
 
-🙏 Agradecimientos
-yt-dlp - Por la increíble herramienta de descarga
-
-Tauri - Por el framework de escritorio
-
-Discord - Por la comunidad que inspiró esta app
-
-<div align="center"> Hecho con ❤️ para la comunidad <br> <sub>Mindload - Descarga lo que amas</sub> </div> ```
+<div align="center">
+  Hecho con ❤️ para la comunidad <br>
+  <sub>Mindload - Descarga lo que amas</sub>
+</div>
