@@ -99,7 +99,7 @@ Descargador de contenido de YouTube (videos, playlists y música) con interfaz g
 | 360p          | Baja         | -    |
 
 ## 📁 Estructura de archivos
-
+```
 Las descargas se organizan automáticamente:
 Descargas/
 └── Mindload/
@@ -108,6 +108,7 @@ Descargas/
 ├── 01 - Artista - Canción 1.mp3
 ├── 02 - Artista - Canción 2.mp3
 └── ...
+```
 
 ## 🛠️ Tecnologías
 
@@ -120,6 +121,7 @@ Descargas/
 | HTML/CSS/JS  | Interfaz de usuario                      |
 
 ## 📂 Estructura del proyecto
+```
 mindload/
 ├── src-tauri/
 │ ├── src/
@@ -132,7 +134,7 @@ mindload/
 │ └── main.js # Lógica del frontend
 ├── package.json # Dependencias Node.js
 └── README.md # Este archivo
-
+```
 ## ⚠️ Limitaciones conocidas
 
 - **Spotify**: El soporte requiere API key y cuenta Premium. Actualmente no implementado.
@@ -175,7 +177,7 @@ Este proyecto está bajo la licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👤 Autor
 
-**LUZY (IAMLUZY)**  
+**LUZY (STAYK5)**  
 GitHub: [@STAYED5](https://github.com/STAYED5)
 
 ## 🙏 Agradecimientos
