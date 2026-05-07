@@ -31,9 +31,8 @@
 
 | Pantalla principal | Detalles de descarga |
 |--------------------|----------------------|
-| <img width="800" height="633" alt="image" src="https://github.com/user-attachments/assets/6c093f5a-0e40-417e-a58b-286bd3a9b29a" />
- | <img width="979" height="727" alt="image" src="https://github.com/user-attachments/assets/7bd495ee-af84-4864-9380-adc15292b15d" />
- |
+| <img width="800" height="633" alt="image" src="https://github.com/user-attachments/assets/6c093f5a-0e40-417e-a58b-286bd3a9b29a" />|
+| <img width="979" height="727" alt="image" src="https://github.com/user-attachments/assets/7bd495ee-af84-4864-9380-adc15292b15d" />|
 
 ---
 
