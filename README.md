@@ -1,7 +1,186 @@
-# Tauri + Vanilla
+# 🎵 Mindload
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.
+<div align="center">
 
-## Recommended IDE Setup
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Tauri](https://img.shields.io/badge/Tauri-2.0-purple)
+![Rust](https://img.shields.io/badge/Rust-1.75-orange)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+**Mindload** es una aplicación de escritorio para descargar música y videos de YouTube con metadatos completos.
+
+</div>
+
+---
+
+## ✨ Características
+
+| Característica | Descripción |
+|----------------|-------------|
+| 🎵 **Descarga de audio** | Extrae audio en formato MP3 con calidad óptima |
+| 🎬 **Descarga de video** | Soporte para resoluciones desde 360p hasta 4K (60 FPS) |
+| 📁 **Organización automática** | Crea carpetas por playlist o artista |
+| 🏷️ **Metadatos completos** | Incrusta título, artista, carátula y número de pista |
+| 📋 **Playlists** | Descarga listas de reproducción completas |
+| 🎯 **Interfaz simple** | Diseño minimalista y fácil de usar |
+| 🚀 **Multiplataforma** | Compatible con Windows, Linux y macOS |
+
+---
+
+## 📸 Capturas de pantalla
+
+| Pantalla principal | Detalles de descarga |
+|--------------------|----------------------|
+| *[Pendiente]* | *[Pendiente]* |
+
+---
+
+## 🚀 Instalación
+
+### Requisitos previos
+
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) instalado y en PATH
+- [ffmpeg](https://ffmpeg.org/) instalado y en PATH
+
+### Descargar ejecutable
+
+1. Ve a la sección [Releases](https://github.com/STAYED5/mindload/releases)
+2. Descarga el archivo correspondiente a tu sistema operativo:
+   - `mindload_2.0.0_x64_en-US.msi` (Windows)
+   - `mindload_2.0.0_amd64.deb` (Linux)
+   - `mindload.app` (macOS)
+3. Ejecuta el instalador
+
+### Desde código fuente
+bash
+# Clonar el repositorio
+git clone https://github.com/STAYED5/mindload.git
+cd mindload
+
+# Instalar dependencias del frontend
+npm install
+
+# Instalar dependencias de Rust
+cd src-tauri
+cargo build
+
+# Ejecutar en modo desarrollo
+cd ..
+npm run tauri dev
+
+# Construir para producción
+npm run tauri build
+
+🎯 Cómo usar
+Pega una URL de YouTube (video, playlist o música)
+
+Selecciona el formato deseado:
+
+MP3 Audio (con metadatos)
+
+Video en diferentes resoluciones
+
+Haz clic en "Descargar"
+
+Los archivos se guardan en Descargas/Mindload/
+
+Formatos soportados
+Formato	Calidad	FPS
+MP3 Audio	320kbps	-
+4K (2160p)	Ultra HD	60
+2K (1440p)	Muy alta	60
+1080p	Full HD	60/30
+720p	HD	60/30
+480p	Media	-
+360p	Baja	-
+Estructura de archivos
+Las descargas se organizan automáticamente:
+
+text
+Descargas/
+└── Mindload/
+    ├── Artista - Canción.mp3          (canciones sueltas)
+    └── Nombre Playlist/               (playlists)
+        ├── 01 - Artista - Canción 1.mp3
+        ├── 02 - Artista - Canción 2.mp3
+        └── ...
+🛠️ Tecnologías
+Tecnología	Uso
+Tauri	Framework de escritorio
+Rust	Backend y lógica de descargas
+yt-dlp	Extracción y descarga de contenido
+ffmpeg	Procesamiento de audio y video
+HTML/CSS/JS	Interfaz de usuario
+📁 Estructura del proyecto
+text
+mindload/
+├── src-tauri/
+│   ├── src/
+│   │   └── main.rs          # Código Rust (backend)
+│   ├── Cargo.toml           # Dependencias Rust
+│   └── tauri.conf.json      # Configuración de Tauri
+├── src/
+│   ├── index.html           # Interfaz principal
+│   ├── styles.css           # Estilos
+│   └── main.js              # Lógica del frontend
+├── package.json             # Dependencias Node.js
+└── README.md                # Este archivo
+⚠️ Limitaciones conocidas
+Spotify: El soporte para Spotify requiere una API key y cuenta Premium. Actualmente no implementado.
+
+YouTube: Descargas limitadas por políticas de YouTube (se recomienda usar con responsabilidad)
+
+Windows: Puede requerir permisos de administrador ocasionalmente
+
+🔧 Solución de problemas
+Problema	Solución
+"yt-dlp not found"	Instala yt-dlp y agrégalo al PATH
+"ffmpeg not found"	Instala ffmpeg y agrégalo al PATH
+Error 429 (Too Many Requests)	Espera unos minutos y vuelve a intentar
+Las descargas no comienzan	Verifica tu conexión a internet
+No se descargan playlists completas	Asegúrate de que la playlist sea pública
+📝 Próximas mejoras
+Barra de progreso en tiempo real
+
+Descarga simultánea de múltiples archivos
+
+Soporte para más plataformas (SoundCloud, Bandcamp)
+
+Cola de descargas
+
+Historial de descargas
+
+Modo oscuro/claro
+
+Configuración de carpeta de destino
+
+🤝 Contribuciones
+Las contribuciones son bienvenidas. Por favor:
+
+Haz un Fork del proyecto
+
+Crea tu rama de características (git checkout -b feature/nueva-caracteristica)
+
+Commit tus cambios (git commit -m 'Agrego nueva caracteristica')
+
+Push a la rama (git push origin feature/nueva-caracteristica)
+
+Abre un Pull Request
+
+📄 Licencia
+Este proyecto está bajo la licencia MIT. Ver el archivo LICENSE para más detalles.
+
+👤 Autor
+LUZY (IAMLUZY)
+
+GitHub: @STAYED5
+
+🙏 Agradecimientos
+yt-dlp - Por la increíble herramienta de descarga
+
+Tauri - Por el framework de escritorio
+
+Discord - Por la comunidad que inspiró esta app
+
+<div align="center"> Hecho con ❤️ para la comunidad <br> <sub>Mindload - Descarga lo que amas</sub> </div> ```
