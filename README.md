@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Tauri](https://img.shields.io/badge/Tauri-2.0-purple)
 ![Rust](https://img.shields.io/badge/Rust-1.75-orange)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20-lightgrey)
 
 **Mindload** es una aplicación de escritorio para descargar música y videos de YouTube con metadatos completos.
 
